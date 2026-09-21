@@ -49,20 +49,17 @@ CommonInput 是 CommonUI 使用的输入抽象。若编辑器提示依赖插件�
 
 ### 3. 补齐模块依赖
 
-在 `Source/LyraUI/LyraUI.Build.cs` 的私有依赖中加入第一阶段需要的模块：
+本项目的公开头文件声明了 `ULyraUIActivatableWidget`。由于它继承 `UCommonActivatableWidget`，继承链又包含 `UUserWidget`，所以直接公开依赖必须包含 `CommonUI` 和 `UMG`：
 
 ```csharp
-PrivateDependencyModuleNames.AddRange(new string[]
+PublicDependencyModuleNames.AddRange(new string[]
 {
     "UMG",
-    "Slate",
-    "SlateCore",
-    "CommonUI",
-    "CommonInput"
+    "CommonUI"
 });
 ```
 
-说明：如果公共头文件暴露了这些模块的类型，则应将对应模块移到 `PublicDependencyModuleNames`。第一步会通过一个项目内 C++ 基类实际验证，而不是只修改 Build.cs。
+`CommonInput`、`Slate` 和 `SlateCore` 会在代码直接使用它们时再添加，避免为了模仿 Lyra 而提前引入没有使用的依赖。
 
 ### 4. 重新生成并编译
 
@@ -70,7 +67,7 @@ PrivateDependencyModuleNames.AddRange(new string[]
 
 ### 5. 编辑器内验证
 
-重启编辑器，在 Content Browser 新建 Widget Blueprint。父类搜索 `CommonActivatableWidget`。
+重启编辑器，在 Content Browser 新建 Widget Blueprint。父类搜索项目自有的 `LyraUIActivatableWidget`。
 
 成功标准：
 
@@ -79,6 +76,10 @@ PrivateDependencyModuleNames.AddRange(new string[]
 - Output Log 没有 CommonUI/CommonInput 加载错误。
 
 这个临时资产可以命名为 `WBP_CommonUI_SmokeTest`，建议放在 `/Game/UI/Dev/`。
+
+## 本次构建结论
+
+第一次只加入 `CommonUI` 时，C++ 编译成功但链接失败，出现大量 `UUserWidget` 未解析符号。将 `UMG` 加为直接公共依赖后链接成功。这说明模块不能只依赖插件的传递依赖；公开继承链涉及的模块应由当前模块直接声明。
 
 ## 暂时不要做的事
 
@@ -98,4 +99,3 @@ PrivateDependencyModuleNames.AddRange(new string[]
 - 所有错误及解决办法。
 
 然后更新 `STATUS.md`，把下一步改为“创建最小 Activatable Widget Stack”。
-
