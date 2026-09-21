@@ -31,5 +31,18 @@
 - UnrealHeaderTool 成功生成 `ULyraUIActivatableWidget` 反射代码。
 - `UnrealEditor-LyraUI.dll` 链接成功。
 - UnrealBuildTool 最终结果：`Succeeded`。
-- 编辑器内 Widget Blueprint 验证尚未执行。
+- 已在编辑器中创建、编译并保存 `/Game/UI/Dev/WBP_CommonUI_SmokeTest`。
+- 资产验证日志未报告该蓝图错误。
+- `.uasset` 已匹配 Git LFS 规则。
 
+## 路径知识点
+
+项目的物理目录 `Content` 在 Unreal 资产系统中挂载为虚拟根路径 `/Game`：
+
+```text
+D:\Dev\MyProject\LyraUI\Content\UI\Dev\WBP_CommonUI_SmokeTest.uasset
+                            ↓
+/Game/UI/Dev/WBP_CommonUI_SmokeTest
+```
+
+因此不应在磁盘 `Content` 下再创建一个名为 `Game` 的目录，否则虚拟路径会变成 `/Game/Game/...`。

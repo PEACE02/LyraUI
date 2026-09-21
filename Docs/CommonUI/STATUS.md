@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-阶段 1 / 实验 1：代码与编译验证已完成，等待编辑器内资产验证。
+阶段 1 / 实验 1：已完成。准备开始实验 2（最小页面栈）。
 
 ## 已确认事实
 
@@ -16,6 +16,8 @@
 - `LyraUI.Build.cs` 已直接公开依赖 `CommonUI` 和 `UMG`。
 - 已添加项目自有父类 `ULyraUIActivatableWidget`。
 - `LyraUIEditor Win64 Development` 已通过 UnrealBuildTool 编译。
+- 已创建并保存 `/Game/UI/Dev/WBP_CommonUI_SmokeTest`，父类为项目自有的 Activatable Widget 基类。
+- 测试资产已由 Git LFS 管理。
 - `DefaultGame.ini` 已有一小段 CommonUI 配置，但这不等价于启用插件或完成输入数据配置。
 - 当前没有项目级 `AGENTS.md`。
 - 当前工作目录没有可用的 Git 仓库状态输出；开始大量修改前建议建立版本控制。
@@ -33,13 +35,14 @@
 
 ## 下一步（只做这一项）
 
-打开编辑器，执行实验 1 的资产验证：在 `/Game/UI/Dev/` 创建 `WBP_CommonUI_SmokeTest`，父类选择 `LyraUIActivatableWidget`，然后编译并保存。
+设计实验 2：创建包含 `CommonActivatableWidgetStack` 的最小根布局，并通过 Stack Push 测试页面。先确定根布局的创建和持有位置，再开始制作资产。
 
 本实验完成标准：
 
-- 编辑器能搜索到 `LyraUIActivatableWidget` 父类。
-- Widget Blueprint 可以编译并保存。
-- Output Log 没有 CommonUI/CommonInput 加载错误。
+- 运行时只创建一个根布局实例。
+- 测试页面通过 Stack Push 加入，而不是直接 `Add to Viewport`。
+- 页面 Push 后进入 Activated 状态。
+- Back 能使页面退出并从 Stack 移除。
 
 ## 后续会话接手流程
 
