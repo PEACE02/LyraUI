@@ -1,0 +1,35 @@
+# Unreal Engine generated files
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+
+# Generated files inside project plugins
+Plugins/**/Binaries/
+Plugins/**/Intermediate/
+
+# IDE and editor state
+.vs/
+.idea/
+.vscode/
+*.VC.db
+*.VC.opendb
+*.sdf
+*.sln
+*.slnx
+*.suo
+*.opensdf
+*.user
+*.userprefs
+
+# Build products and transient logs
+*.log
+*.pdb
+*.obj
+*.opensdf
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
+

@@ -1,0 +1,14 @@
+# Unreal binary assets are not meaningfully mergeable as text.
+*.uasset filter=lfs diff=lfs merge=lfs -text
+*.umap filter=lfs diff=lfs merge=lfs -text
+
+# Keep source and configuration line endings stable across platforms.
+*.h text eol=lf
+*.cpp text eol=lf
+*.cs text eol=lf
+*.ini text eol=lf
+*.uproject text eol=lf
+*.uplugin text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+
