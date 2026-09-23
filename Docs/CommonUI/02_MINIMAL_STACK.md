@@ -87,6 +87,32 @@ Event BeginPlay
 
 若 Back 没有触发，不要临时监听键盘事件绕过 CommonUI；记录现象，下一步检查 CommonInput 的默认 Back Action 与输入路由配置。
 
+## 本项目的实际输入配置
+
+- `GameViewportClientClassName=/Script/CommonUI.CommonGameViewportClient`
+- Common Input Data：`/Game/UI/Foundation/Input/B_CommonUIInputData`
+- 默认 Back Action：`DT_CommonUIInputActions` 中的 `Back`
+- 键盘：`Escape`
+- 手柄：`Gamepad Face Button Right`
+- 触屏/移动平台：`Android Back`
+
+为了区分游戏内 Back 和编辑器的停止命令，已在 UE 5.8 的独立“键盘快捷方式”窗口中将：
+
+```text
+Play World (PIE/SIE) -> Stop
+```
+
+由 `Escape` 改为 `Shift+Escape`。不要误改 `Level Instance Editor -> Exit Mode`；那是另一条同样默认使用 Escape 的编辑器命令。
+
+## 2026-09-23 实测结果
+
+- 编辑器启动地图和游戏默认地图均为 `/Game/Maps/L_CommonUITest`。
+- 打开项目后直接进入测试地图。
+- 启动 PIE 后自动创建根布局，并由 `ScreenStack` Push SmokeTest 页面。
+- `Escape` 被 CommonUI Action Router 路由为 Back，SmokeTest 收到 Back 后 Deactivate 并离开 Stack。
+- `Shift+Escape` 停止 PIE。
+- 实验 2 验收通过。
+
 ## 机制说明
 
 `Push Widget` 的核心流程：
@@ -116,4 +142,3 @@ On Deactivated
 - `On Activated` 和 `On Deactivated` 都被观察到。
 - Back 能让测试页面退出。
 - 能解释根布局与页面实例的不同所有权和生命周期。
-

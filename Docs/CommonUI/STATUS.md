@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-阶段 1 / 实验 1：已完成。正在执行实验 2（最小页面栈）。
+阶段 1 / 实验 2（最小页面栈与 Back 路由）：已完成。下一步验证默认焦点与键盘/手柄导航。
 
 ## 已确认事实
 
@@ -21,6 +21,11 @@
 - `DefaultGame.ini` 已有一小段 CommonUI 配置，但这不等价于启用插件或完成输入数据配置。
 - 当前没有项目级 `AGENTS.md`。
 - Git 仓库已建立，并跟踪 GitHub 远端 `PEACE02/LyraUI`。
+- 已创建 `/Game/Maps/L_CommonUITest`，并将其设为 `EditorStartupMap` 和 `GameDefaultMap`。
+- 已创建 `/Game/UI/Dev/WBP_CommonUI_RootLayout`，其中包含 `ScreenStack`。
+- 测试页面由 `ScreenStack -> Push Widget` 创建和管理，根布局是唯一执行 `Add to Viewport` 的 Widget。
+- 已使用 `CommonGameViewportClient`，并配置项目自有的 Common Input Data 和 Back Action。
+- PIE 实测：`Escape` 关闭栈顶 SmokeTest 页面；`Shift+Escape` 停止 PIE。
 
 ## 当前结论
 
@@ -35,14 +40,12 @@
 
 ## 下一步（只做这一项）
 
-执行 [02_MINIMAL_STACK.md](02_MINIMAL_STACK.md)：先完善 SmokeTest 页面，再创建只含一个 `CommonActivatableWidgetStack` 的根布局，通过临时 Level Blueprint 创建唯一根布局并 Push 测试页面。
+为 SmokeTest 页面增加至少两个可聚焦按钮，显式设置激活后的默认焦点，并验证：
 
-本实验完成标准：
-
-- 运行时只创建一个根布局实例。
-- 测试页面通过 Stack Push 加入，而不是直接 `Add to Viewport`。
-- 页面 Push 后进入 Activated 状态。
-- Back 能使页面退出并从 Stack 移除。
+- 页面激活时焦点自动落到预期按钮。
+- 键盘方向键和手柄方向键可以在按钮之间导航。
+- 输入设备切换后焦点不会无故丢失。
+- Back 仍然由当前激活页面处理。
 
 ## 后续会话接手流程
 
