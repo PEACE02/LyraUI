@@ -46,7 +46,25 @@ Get Desired Focus Target
 
 不要在 `On Activated` 中手动调用 `Set Keyboard Focus`；本实验需要验证 CommonUI 自己的激活焦点机制。
 
-## 3. PIE 验证
+## 3. 声明菜单输入配置
+
+当前项目的 `ULyraUIActivatableWidget` 仍是最小空基类，不像 Lyra 的基类那样原生提供输入模式属性。因此先在 SmokeTest 蓝图中实现：
+
+```text
+Get Desired Input Config
+  -> Make UIInputConfig
+       Input Mode = Menu
+       Mouse Capture Mode = No Capture
+       Mouse Lock Mode = Do Not Lock
+       Hide Cursor During Viewport Capture = false
+  -> Return Value
+```
+
+`Get Desired Focus Target` 只说明页面内部应该聚焦哪个控件；`Get Desired Input Config` 才负责 Menu/Game 输入模式和鼠标捕获状态。不要在 Level Blueprint 中手动调用 `Set Input Mode UI Only` 或设置 `Show Mouse Cursor`。
+
+在 PIE 的“高级设置”中启用 `Game Gets Mouse Control`。UE 5.8 在编辑器中只有当游戏视口位于焦点路径时才应用 CommonUI 的 Input Config 和默认焦点；否则启动时会跳过这一步。该选项是本机编辑器偏好，不属于项目运行时配置。
+
+## 4. PIE 验证
 
 开始 PIE 后不要先点击页面：
 
@@ -59,6 +77,8 @@ Get Desired Focus Target
 
 键盘方向导航和基础手柄方向导航由 Slate/UMG Navigation 处理，本实验不需要创建 IA 或 IMC。
 
+普通 UMG `Button` 的键盘确认由 Slate Navigation 提供，默认 `Enter` 和 `Space` 都映射为 `Accept`，不依赖 `B_CommonUIInputData.DefaultClickAction`。如果确认键偶发无效，应完全停止并重新运行 PIE，再确认游戏视口焦点；不要先用 Default Click Action 掩盖焦点问题。
+
 ## 完成标准
 
 - 页面激活后无需鼠标点击，第一次确认直接触发 First。
@@ -66,3 +86,12 @@ Get Desired Focus Target
 - 键盘与手柄均能完成导航和确认。
 - Back 行为没有被焦点控件破坏。
 - 能区分页面 `Activated`、UI Action 输入可达和具体控件 Focus 三个概念。
+
+## 2026-09-23 实测结果
+
+- Action Router 成功应用 `Menu + NoCapture + DoNotLock`。
+- 日志确认默认焦点目标为 `Button_First`。
+- `Enter` 和 `Space` 均可触发当前聚焦按钮。
+- Up/Down 可在两个按钮之间导航，First/Second 的点击打印均已观察到。
+- `Escape` 仍由 SmokeTest 的 Back Handler 处理。
+- 键盘与鼠标验收通过；实体手柄验证可在具备设备时补做。

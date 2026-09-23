@@ -4,7 +4,7 @@
 
 ## 当前阶段
 
-阶段 1 / 实验 2（最小页面栈与 Back 路由）：已完成。下一步验证默认焦点与键盘/手柄导航。
+阶段 1 / 实验 3（默认焦点与基础导航）：键盘、鼠标验收已完成；实体手柄验证待有设备时补做。下一步把临时蓝图 Input Config 上移到项目 C++ 基类。
 
 ## 已确认事实
 
@@ -26,6 +26,9 @@
 - 测试页面由 `ScreenStack -> Push Widget` 创建和管理，根布局是唯一执行 `Add to Viewport` 的 Widget。
 - 已使用 `CommonGameViewportClient`，并配置项目自有的 Common Input Data 和 Back Action。
 - PIE 实测：`Escape` 关闭栈顶 SmokeTest 页面；`Shift+Escape` 停止 PIE。
+- SmokeTest 已实现 `Get Desired Focus Target`，默认聚焦 `Button_First`。
+- SmokeTest 当前临时通过蓝图 `Get Desired Input Config` 声明 `Menu + NoCapture + DoNotLock`。
+- PIE 实测：Enter/Space 可确认，Up/Down 可在两个普通 UMG Button 间导航，鼠标点击不会被视口捕获。
 
 ## 当前结论
 
@@ -40,12 +43,7 @@
 
 ## 下一步（只做这一项）
 
-执行 [03_FOCUS_AND_NAVIGATION.md](03_FOCUS_AND_NAVIGATION.md)：为 SmokeTest 页面增加两个可聚焦按钮，显式设置激活后的默认焦点，并验证：
-
-- 页面激活时焦点自动落到预期按钮。
-- 键盘方向键和手柄方向键可以在按钮之间导航。
-- 输入设备切换后焦点不会无故丢失。
-- Back 仍然由当前激活页面处理。
+参考 Lyra 的 `ULyraActivatableWidget`，为项目的 `ULyraUIActivatableWidget` 增加可配置的 `Default / GameAndMenu / Game / Menu` 输入模式并覆盖 `GetDesiredInputConfig()`。随后让 SmokeTest 在类默认值选择 `Menu`，删除它的临时蓝图 `Get Desired Input Config` 覆写，并回归验证现有行为不变。
 
 ## 后续会话接手流程
 
