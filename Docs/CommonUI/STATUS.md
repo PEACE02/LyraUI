@@ -1,10 +1,10 @@
 # 接手状态
 
-最后更新：2026-09-21
+最后更新：2026-09-23
 
 ## 当前阶段
 
-阶段 1 / 实验 1：已完成。准备开始实验 2（最小页面栈）。
+阶段 1 / 实验 1：已完成。正在执行实验 2（最小页面栈）。
 
 ## 已确认事实
 
@@ -20,7 +20,7 @@
 - 测试资产已由 Git LFS 管理。
 - `DefaultGame.ini` 已有一小段 CommonUI 配置，但这不等价于启用插件或完成输入数据配置。
 - 当前没有项目级 `AGENTS.md`。
-- 当前工作目录没有可用的 Git 仓库状态输出；开始大量修改前建议建立版本控制。
+- Git 仓库已建立，并跟踪 GitHub 远端 `PEACE02/LyraUI`。
 
 ## 当前结论
 
@@ -35,7 +35,7 @@
 
 ## 下一步（只做这一项）
 
-设计实验 2：创建包含 `CommonActivatableWidgetStack` 的最小根布局，并通过 Stack Push 测试页面。先确定根布局的创建和持有位置，再开始制作资产。
+执行 [02_MINIMAL_STACK.md](02_MINIMAL_STACK.md)：先完善 SmokeTest 页面，再创建只含一个 `CommonActivatableWidgetStack` 的根布局，通过临时 Level Blueprint 创建唯一根布局并 Push 测试页面。
 
 本实验完成标准：
 

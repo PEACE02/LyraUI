@@ -21,6 +21,7 @@
 - [STATUS.md](STATUS.md)：当前进度、下一步和接手说明。新会话先读这里。
 - [ROADMAP.md](ROADMAP.md)：完整学习路线以及每阶段的验收目标。
 - [01_PROJECT_BASELINE.md](01_PROJECT_BASELINE.md)：项目现状、Lyra 对照和第一步实操。
+- [02_MINIMAL_STACK.md](02_MINIMAL_STACK.md)：最小页面栈与激活生命周期实验。
 - `notes/`：后续每个实验的过程、问题与结论。
 - `decisions/`：后续影响架构的选择及理由。
 
@@ -41,4 +42,3 @@
 - 不使用它时会怎样？
 - 它在运行时由谁创建、持有和销毁？
 - 如何通过日志、Widget Reflector 或实际输入验证？
-
