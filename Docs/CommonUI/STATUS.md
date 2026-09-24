@@ -48,7 +48,7 @@
 
 ## 下一步（只做这一项）
 
-进入阶段 2：在测试页面加入 `CommonActionWidget`，先显示 Back Action 的当前按键提示，再补齐 Controller Data，观察键鼠与手柄输入类型变化时提示图标如何刷新。
+阶段 2 的键鼠提示已完成：动态键帽 `Esc` 通过 PIE 验证；Xbox Series X Controller Data 已迁移并注册，实体手柄运行时切换验收暂缓。下一步进入阶段 3，使用 `CommonButtonBase` 和项目按钮样式替换页面中的临时普通 UMG Button。
 
 ## 后续会话接手流程
 

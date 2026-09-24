@@ -16,6 +16,7 @@ public class LyraUI : ModuleRules
 			"InputCore",
 			"EnhancedInput",
 			"UMG",
+			"CommonInput",
 			"CommonUI"
 		});
 	}
