@@ -1,10 +1,10 @@
 # 接手状态
 
-最后更新：2026-09-24
+最后更新：2026-09-28
 
 ## 当前阶段
 
-阶段 1 已完成：最小 Stack、Back、输入配置、默认焦点、基础导航和双页面 Push/返回均已通过键鼠验证；实体手柄验证待有设备时补做。下一步进入阶段 2（输入提示与跨设备切换）。
+阶段 1 的页面栈、输入与焦点闭环以及阶段 2 的键鼠操作提示均已完成；Xbox Series X Controller Data 已配置，实体手柄验收暂缓。当前进入阶段 3：建立项目自己的 `CommonButtonBase` 与集中式按钮样式。
 
 ## 已确认事实
 
@@ -29,11 +29,16 @@
 - SmokeTest 已实现 `Get Desired Focus Target`，默认聚焦 `Button_First`。
 - `ULyraUIActivatableWidget` 已提供 `Default / GameAndMenu / Game / Menu` 类默认输入模式，并覆盖 `GetDesiredInputConfig()`。
 - SmokeTest 已使用类默认值 `Input Config = Menu`，临时蓝图 Input Config 覆写已移除。
-- PIE 实测：Enter/Space 可确认，Up/Down 可在两个普通 UMG Button 间导航，鼠标点击不会被视口捕获。
-- PIE 实测：点击空白区域后按钮失焦，Enter/Space 不再触发按钮；再次聚焦按钮后行为恢复，符合 Slate 焦点规则。
+- 鼠标点击不会被视口捕获；键鼠模式按 Lyra 的默认取舍主要使用鼠标操作。
 - 已创建 `/Game/UI/Dev/WBP_CommonUI_SecondScreen`；SmokeTest 通过事件分发器请求导航，RootLayout 将第二页 Push 到同一个 ScreenStack。
 - 双页面实测：Push 后旧页面 Deactivated 并渐隐，新页面 Activated 并渐显；第二页退出后原 SmokeTest 实例重新 Activated。
-- SmokeTest 返回后再次使用 `Get Desired Focus Target`，焦点落到 `Button_First`，Enter 打印 `First Clicked`。
+- SmokeTest 返回后再次使用 `Get Desired Focus Target`，此前已通过日志及键盘确认实验验证焦点会恢复到 `Button_First`。
+- 已添加最小项目按钮基类 `ULyraUIButtonBase`；它保留 CommonButtonBase 的交互职责，只统一按钮文字和当前 Text Style。
+- 已创建三种按钮 `CommonTextStyle`、`ButtonStyle_CommonUI_Primary` 和 `WBP_CommonUI_TextButton`，并替换 SmokeTest 的两个普通 UMG Button。
+- 已修复快速 Enter 重复发送打开请求导致同一 Stack 重复 Push 两个 SecondScreen 的问题；当前由导航按钮在请求后锁定交互，并在页面重新 Activated 时恢复。
+- 通用按钮的 Focus 表现采用 Lyra 取舍：鼠标真实 Hover，手柄焦点通过虚拟光标复用 Hover；纯键盘不增加 Focused Style，Selected 保留其业务语义。
+- 已移除 `CommonButtonAcceptKeyHandling=TriggerClick`；CommonButton 恢复 Lyra 使用的 `Ignore` 默认行为，键鼠不以 Enter/Space 直接确认焦点按钮。
+- `ButtonStyle_CommonUI_Primary` 的 Disabled Brush / Disabled Text Style 已在 PIE 验证：禁用按钮不可 Hover、不可点击，外观正确切换。
 
 ## 当前结论
 
@@ -48,7 +53,7 @@
 
 ## 下一步（只做这一项）
 
-阶段 2 的键鼠提示已完成：动态键帽 `Esc` 通过 PIE 验证；Xbox Series X Controller Data 已迁移并注册，实体手柄运行时切换验收暂缓。下一步进入阶段 3，使用 `CommonButtonBase` 和项目按钮样式替换页面中的临时普通 UMG Button。
+继续阶段 3：不再拆分孤立小实验，直接实现完整的“设置中心”模块；用 TabList、Switcher 和 List 一次覆盖 Button Group、Selected、Disabled、页面切换、Back 与焦点恢复。
 
 ## 后续会话接手流程
 
